@@ -6,13 +6,10 @@
     ],
     "customizer": [
       "./scripts/customizer.js"
-    ],
-    "jquery.easing": [
-      "./scripts/jquery.easing.min.js"
     ]
   },
-  "publicPath": "/wp-content/themes/test-project",
-  "devUrl": "http://example.test",
+  "publicPath": "/app/themes/sage",
+  "devUrl": "http://test-project.test",
   "proxyUrl": "http://localhost:3000",
   "cacheBusting": "[name]_[hash:8]",
   "watch": [

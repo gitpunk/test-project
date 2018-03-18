@@ -11,60 +11,9 @@ use Roots\Sage\Template\BladeProvider;
  * Theme assets
  */
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style( 'fonts', crave_fonts_url() );
-    // wp_enqueue_style( $handle, $src, $deps = array(), $ver, $media = 'all')
     wp_enqueue_style('sage/main.css', asset_path('styles/main.css'), false, null);
-    // wp_enqueue_script() syntax, $handle, $src, $deps, $version, $in_footer(boolean)
-    wp_enqueue_script('sage/jquery.easing.js', asset_path('scripts/jquery.easing.js'), ['jquery'], null, true);
     wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), ['jquery'], null, true);
 }, 100);
-
-
-/**
- * Register custom fonts.
- */
-function crave_fonts_url() {
-	$fonts_url = '';
-	/**
-	 * Translators: If there are characters in your language that are not
-	 * supported by Oswald translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-	$oswald = _x( 'on', 'Oswald font: on or off', 'crave' );
-
-	$font_families = array();
-
-	if ( 'off' !== $oswald ) {
-		$font_families[] = 'Oswald:400,600';
-	}
-	if ( in_array( 'on', array($oswald) ) ) {
-		$query_args = array(
-			'family' => urlencode( implode( '|', $font_families ) ),
-			'subset' => urlencode( 'latin' ),
-		);
-		$fonts_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
-	}
-	return esc_url_raw( $fonts_url );
-}
-
-/**
- * Add preconnect for Google Fonts.
- *
- * @since Twenty Seventeen 1.0
- *
- * @param array  $urls           URLs to print for resource hints.
- * @param string $relation_type  The relation type the URLs are printed.
- * @return array $urls           URLs to print for resource hints.
- */
-add_filter( 'wp_resource_hints', function( $urls, $relation_type ) {
-	if ( wp_style_is( 'crave-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
-		$urls[] = array(
-			'href' => 'https://fonts.gstatic.com',
-			'crossorigin',
-		);
-	}
-	return $urls;
-}, 10, 2 );
 
 /**
  * Theme setup
@@ -94,20 +43,11 @@ add_action('after_setup_theme', function () {
         'primary_navigation' => __('Primary Navigation', 'sage')
     ]);
 
-    // Add theme support for Custom Logo.
-	add_theme_support( 'custom-logo', array(
-		'width'       => 250,
-		'height'      => 50,
-		'flex-width'  => true,
-	) );
-
     /**
      * Enable post thumbnails
      * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
      */
-    add_theme_support('post-thumbnails'); 
-
-    add_image_size( 'crave-index', 545, 363, false);
+    add_theme_support('post-thumbnails');
 
     /**
      * Enable HTML5 markup support
@@ -148,12 +88,6 @@ add_action('widgets_init', function () {
     ] + $config);
 });
 
-
-/**
- * Load Bootstrap 4 nav walker class
- */
-require_once('bs4navwalker.php');
-
 /**
  * Updates the `$post` variable on each iteration of the loop.
  * Note: updated value is only available for subsequently loaded views, such as partials
@@ -192,9 +126,3 @@ add_action('after_setup_theme', function () {
         return "<?= " . __NAMESPACE__ . "\\asset_path({$asset}); ?>";
     });
 });
-
-/**
- * Enable ACF 5 early access
- * Requires at least version ACF 4.4.12 to work
- */
-define('ACF_EARLY_ACCESS', '5');

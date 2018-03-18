@@ -5,17 +5,3 @@
 .banner .nav a {
   @extend .nav-link;
 }
-
-header {
-  padding: 154px 0 100px;
-}
-
-@media (min-width: 992px) {
-  header {
-    padding: 300px 0 200px;
-  }
-}
-
-section {
-  padding: 150px 0;
-}

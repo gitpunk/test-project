@@ -1,1 +1,0 @@
-<li><a class="nav-link js-scroll-trigger" href="#thing-{{ the_ID() }}">{{ get_the_title() }}</a></li>
